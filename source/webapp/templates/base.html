@@ -12,7 +12,23 @@
     {% block styles %}{% endblock %}
 </head>
 <body>
-{% block menu %}{% endblock %}
+{% block menu %}
+    <li>
+        <a href="{% url "webapp:index" %}">HOME</a>
+    </li>
+    <li>
+        <a href="{% url "webapp:photo_add" %}">Добавить фотографию</a>
+    </li>
+    {% if user.is_authenticated %}
+    <li>
+        <a href="{% url "webapp:logout" %}">Выход</a>
+    </li>
+    {% else %}
+        <li>
+            <a href="{%  url "webapp:login" %}"> Вход</a>
+        </li>
+    {% endif %}
+{% endblock %}
 <div class="container">
     {% block content %}{% endblock %}
 </div>

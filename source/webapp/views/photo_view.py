@@ -8,20 +8,20 @@ from webapp.models import Photo
 
 class PhotoListView(ListView):
 
-    template_name = 'photo/list.html'
+    template_name = 'photo/index.html'
     model = Photo
-    context_key = 'photos'
+    context_object_name = 'photos'
     oredering = ['-created_at']
 
 
-class ArticleView(DetailView):
+class PhotoView(DetailView):
     template_name = 'photo/photo.html'
     model = Photo
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         photo = self.object
-        comments = photo.comments.order_by('-created_at')
+        comments = photo.comment_picture.order_by('-created_at')
         self.paginate_comments_to_context(comments, context)
         return context
 
@@ -45,9 +45,8 @@ class PhotoCreateView(CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-    def get_redirect_url(self):
-        return reverse('photo_view', kwargs={'pk': self.object.pk})
-
+    def get_success_url(self):
+        return reverse('webapp:photo_view', kwargs={'pk': self.object.pk})
 
 class PhotoUpdateView(UpdateView):
 
@@ -56,14 +55,16 @@ class PhotoUpdateView(UpdateView):
     form_class = PhotoForm
     context_key = 'photo'
 
+    def get_success_url(self):
+        return reverse('webapp:photo_view', kwargs={'pk': self.object.pk})
 
-    def get_redirect_url(self):
-        return reverse('photo_view', kwargs={'pk': self.object.pk})
 
-
-class ArticleDeleteView(DeleteView):
+class PhotoDeleteView(DeleteView):
 
     template_name = 'photo/delete.html'
     model = Photo
     context_key = 'photo'
-    redirect_url = reverse_lazy('index')
+
+
+    def get_success_url(self):
+        return reverse('webapp:index')

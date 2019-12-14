@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    <form action="{% url 'accounts:login' %}?next={{ next }}" method="post" class="text-center">
+    <form action="{% url 'webapp:login' %}?next={{ next }}" method="post" class="text-center">
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ next }}">
         {% if has_error %}

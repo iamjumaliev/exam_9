@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+    <<img class="photo" src="{{ photo.picture.url }}" width="250" height="250" alt="picture">
+    <h1 class="my-3"> Подпись фотографии: {{ photo.label }}</h1>
+    <p>Автор: {{ photo.author }}</p>
+    <p>Дата создания: {{ photo.created_at }}</p>
+    <p>Комментарии:</p>
+        {% for comment in comments %}
+            <p>Текст: {{ comment.text }} <br> Создан {{ comment.created_at }}</p>
+            <p>Автор : {{ comment.author }}</p>
+        {% endfor %}
+    {% if is_paginated %}
+        {% include 'partial/pagination.html' %}
+    {% endif %}
+{% endblock %}
