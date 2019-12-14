@@ -12,6 +12,7 @@ class Photo(models.Model):
     def __str__(self):
         return self.label
 
+
 class Comment(models.Model):
     text = models.CharField(max_length=2000, null=False, blank=False, verbose_name='Текст')
     picture = models.ForeignKey('webapp.Photo',null=False, blank=False, verbose_name='Фотография',

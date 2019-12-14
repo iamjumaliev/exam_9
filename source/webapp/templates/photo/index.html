@@ -13,18 +13,20 @@
                                {{ photo.label }}
                            </a>
                         </h3>
+                        {% if request.user == photo.author or perms.webapp.delete_photo %}
                         <li>
                             <a href="{% url 'webapp:photo_delete' photo.pk %}">Delete photo</a>
                         </li>
+                        {% endif %}
+                        {% if request.user == photo.author or perms.webapp.change_photo %}
                         <li>
                             <a href="{% url 'webapp:photo_update' photo.pk %}">Update photo</a>
                         </li>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         {% endfor %}
-        {% if is_paginated %}
-            {% include 'partial/pagination.html' %}
-        {% endif %}
+
     </div>
 {% endblock %}

@@ -9,7 +9,26 @@
             <p>Текст: {{ comment.text }} <br> Создан {{ comment.created_at }}</p>
             <p>Автор : {{ comment.author }}</p>
         {% endfor %}
-    {% if is_paginated %}
-        {% include 'partial/pagination.html' %}
+    {% if user.is_authenticated %}
+    <form id="">
+    <input  class="form-control" type="text" id="text_input">
+    <input  class="form-control" type="hidden" id="photo_input" value={{ photo.pk }}>
+    <input  class="form-control" type="hidden" id="author_input" value={{ request.user }}>
+    <button type="submit" id="comment_btn">
+        <script>
+            let textInput,photoInput,authorInput;
+            function setUpGlobalVars() {
+                textInput = $('#text_input');
+                photoInput = $('#photo_input');
+                authorInput = $('#author_input')
+                }
+            ($('#comment_btn').on('submit',function (event) {
+                event.preventDefault()
+
+
+            }))
+        </script>
+        Отправить</button>
+    </form>
     {% endif %}
 {% endblock %}

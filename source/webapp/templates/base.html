@@ -16,9 +16,11 @@
     <li>
         <a href="{% url "webapp:index" %}">HOME</a>
     </li>
+    {% if user.is_authenticated %}
     <li>
         <a href="{% url "webapp:photo_add" %}">Добавить фотографию</a>
     </li>
+    {% endif %}
     {% if user.is_authenticated %}
     <li>
         <a href="{% url "webapp:logout" %}">Выход</a>
