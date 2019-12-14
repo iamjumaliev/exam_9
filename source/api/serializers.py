@@ -3,12 +3,16 @@ from webapp.models import Photo,Comment
 from rest_framework import serializers
 
 
-
 class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('id','text','picture','author','created_at')
+        fields = ('id','text','picture','created_at', 'author')
+
+    def save(self,request):
+        self.fields.author = request.user
+        return super().save()
+
 
 
 class PhotoSerializer(serializers.ModelSerializer):
