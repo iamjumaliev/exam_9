@@ -4,7 +4,7 @@ from django.db import models
 
 class Photo(models.Model):
     picture = models.ImageField(null=False, blank=False, upload_to='pics', verbose_name='Фотография')
-    label =  models.CharField(max_length=2000, null=False, blank=False, verbose_name='Подпись')
+    label = models.CharField(max_length=2000, null=False, blank=False, verbose_name='Подпись')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     likes = models.IntegerField(default=0, verbose_name='Лайки')
     author = models.ForeignKey(User,related_name='photo_author',on_delete=models.PROTECT,
