@@ -38,9 +38,15 @@ def like_up(self, request, pk=None):
         return redirect('webapp:login')
     else:
         photo = self.get_object()
-        photo.likes += 1
-        photo.save()
-        return Response({'id': photo.pk, 'likes': photo.likes})
+        if request.user == photo.photo_liked.owner:
+            photo.likes += 1
+            photo.save()
+            return Response({'id': photo.pk, 'likes': photo.likes})
+        else:
+            return Response({'error': 'you have already liked it'})
+
+
+
 
 @action(methods=['post'], detail=True)
 def like_down(self, request, pk=None):
@@ -48,7 +54,9 @@ def like_down(self, request, pk=None):
         return redirect('webapp:login')
     else:
         photo = self.get_object()
-        photo.likes -= 1
-        photo.save()
-        return Response({'id': photo.pk, 'likes': photo.likes})
-# Create your views here.
+        if request.user == photo.photo_liked.owner:
+            photo.likes -= 1
+            photo.save()
+            return Response({'id': photo.pk, 'likes': photo.likes})
+        else:
+            return Response({'error': 'you have already disliked'})
